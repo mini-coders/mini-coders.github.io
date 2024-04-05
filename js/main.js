@@ -1,269 +1,126 @@
-/* ========================================================================= */
-/*	Preloader
-/* ========================================================================= */
+(function ($) {
+    "use strict";
 
-jQuery(window).load(function(){
-
-	$("#preloader").fadeOut("slow");
-
-});
-
-/* ========================================================================= */
-/*  Welcome Section Slider
-/* ========================================================================= */
-
-$(function() {
-
-    var Page = (function() {
-
-        var $navArrows = $( '#nav-arrows' ),
-            $nav = $( '#nav-dots > span' ),
-            slitslider = $( '#slider' ).slitslider( {
-                onBeforeChange : function( slide, pos ) {
-
-                    $nav.removeClass( 'nav-dot-current' );
-                    $nav.eq( pos ).addClass( 'nav-dot-current' );
-
-                }
-            } ),
-
-            init = function() {
-
-                initEvents();
-                
-            },
-            initEvents = function() {
-
-                // add navigation events
-                $navArrows.children( ':last' ).on( 'click', function() {
-
-                    slitslider.next();
-                    return false;
-
-                } );
-
-                $navArrows.children( ':first' ).on( 'click', function() {
-                    
-                    slitslider.previous();
-                    return false;
-
-                } );
-
-                $nav.each( function( i ) {
-                
-                    $( this ).on( 'click', function( event ) {
-                        
-                        var $dot = $( this );
-                        
-                        if( !slitslider.isActive() ) {
-
-                            $nav.removeClass( 'nav-dot-current' );
-                            $dot.addClass( 'nav-dot-current' );
-                        
-                        }
-                        
-                        slitslider.jump( i + 1 );
-                        return false;
-                    
-                    } );
-                    
-                } );
-
-            };
-
-            return { init : init };
-
-    })();
-
-    Page.init();
-
-});
+    // Spinner
+    var spinner = function () {
+        setTimeout(function () {
+            if ($('#spinner').length > 0) {
+                $('#spinner').removeClass('show');
+            }
+        }, 1);
+    };
+    spinner();
+    
+    
+    // Initiate the wowjs
+    new WOW().init();
 
 
-
-$(document).ready(function(){
-
-	/* ========================================================================= */
-	/*	Menu item highlighting
-	/* ========================================================================= */
-
-	jQuery('#nav').singlePageNav({
-		offset: jQuery('#nav').outerHeight(),
-		filter: ':not(.external)',
-		speed: 2000,
-		currentClass: 'current',
-		easing: 'easeInOutExpo',
-		updateHash: true,
-		beforeStart: function() {
-			console.log('begin scrolling');
-		},
-		onComplete: function() {
-			console.log('done scrolling');
-		}
-	});
-	
+    // Sticky Navbar
     $(window).scroll(function () {
-        if ($(window).scrollTop() > 400) {
-            $(".navbar-brand a").css("color","#fff");
-            $("#navigation").removeClass("animated-header");
+        if ($(this).scrollTop() > 45) {
+            $('.navbar').addClass('sticky-top shadow-sm');
         } else {
-            $(".navbar-brand a").css("color","inherit");
-            $("#navigation").addClass("animated-header");
+            $('.navbar').removeClass('sticky-top shadow-sm');
         }
     });
-	
-	/* ========================================================================= */
-	/*	Fix Slider Height
-	/* ========================================================================= */	
-
-    // Slider Height
-    var slideHeight = $(window).height();
     
-    $('#home-slider, #slider, .sl-slider, .sl-content-wrapper').css('height',slideHeight);
-
-    $(window).resize(function(){'use strict',
-        $('#home-slider, #slider, .sl-slider, .sl-content-wrapper').css('height',slideHeight);
+    // Dropdown on mouse hover
+    const $dropdown = $(".dropdown");
+    const $dropdownToggle = $(".dropdown-toggle");
+    const $dropdownMenu = $(".dropdown-menu");
+    const showClass = "show";
+    
+    $(window).on("load resize", function() {
+        if (this.matchMedia("(min-width: 992px)").matches) {
+            $dropdown.hover(
+            function() {
+                const $this = $(this);
+                $this.addClass(showClass);
+                $this.find($dropdownToggle).attr("aria-expanded", "true");
+                $this.find($dropdownMenu).addClass(showClass);
+            },
+            function() {
+                const $this = $(this);
+                $this.removeClass(showClass);
+                $this.find($dropdownToggle).attr("aria-expanded", "false");
+                $this.find($dropdownMenu).removeClass(showClass);
+            }
+            );
+        } else {
+            $dropdown.off("mouseenter mouseleave");
+        }
     });
-	
-	
-	
-	$("#works, #testimonial").owlCarousel({	 
-		navigation : true,
-		pagination : false,
-		slideSpeed : 700,
-		paginationSpeed : 400,
-		singleItem:true,
-		navigationText: ["<i class='fa fa-angle-left fa-lg'></i>","<i class='fa fa-angle-right fa-lg'></i>"]
-	});
-	
-	
-	/* ========================================================================= */
-	/*	Featured Project Lightbox
-	/* ========================================================================= */
-
-	$(".fancybox").fancybox({
-		padding: 0,
-
-		openEffect : 'elastic',
-		openSpeed  : 650,
-
-		closeEffect : 'elastic',
-		closeSpeed  : 550,
-
-		closeClick : true,
-			
-		beforeShow: function () {
-			this.title = $(this.element).attr('title');
-			this.title = '<h3>' + this.title + '</h3>' + '<p>' + $(this.element).parents('.portfolio-item').find('img').attr('alt') + '</p>';
-		},
-		
-		helpers : {
-			title : { 
-				type: 'inside' 
-			},
-			overlay : {
-				css : {
-					'background' : 'rgba(0,0,0,0.8)'
-				}
-			}
-		}
-	});
-	
-});
 
 
-/* ==========  START GOOGLE MAP ========== */
-
-// When the window has finished loading create our google map below
-google.maps.event.addDomListener(window, 'load', init);
-
-function init() {
-    // Basic options for a simple Google Map
-    // For more options see: https://developers.google.com/maps/documentation/javascript/reference#MapOptions
-
-	    var myLatLng = new google.maps.LatLng(22.402789, 91.822156);
-
-	    var mapOptions = {
-	        zoom: 15,
-	        center: myLatLng,
-	        disableDefaultUI: true,
-	        scrollwheel: false,
-	        navigationControl: true,
-	        mapTypeControl: false,
-	        scaleControl: false,
-	        draggable: true,
-
-        // How you would like to style the map. 
-        // This is where you would paste any style found on Snazzy Maps.
-        styles: [{
-            featureType: 'water',
-            stylers: [{
-                color: '#46bcec'
-            }, {
-                visibility: 'on'
-            }]
-        }, {
-            featureType: 'landscape',
-            stylers: [{
-                color: '#f2f2f2'
-            }]
-        }, {
-            featureType: 'road',
-            stylers: [{
-                saturation: -100
-            }, {
-                lightness: 45
-            }]
-        }, {
-            featureType: 'road.highway',
-            stylers: [{
-                visibility: 'simplified'
-            }]
-        }, {
-            featureType: 'road.arterial',
-            elementType: 'labels.icon',
-            stylers: [{
-                visibility: 'off'
-            }]
-        }, {
-            featureType: 'administrative',
-            elementType: 'labels.text.fill',
-            stylers: [{
-                color: '#444444'
-            }]
-        }, {
-            featureType: 'transit',
-            stylers: [{
-                visibility: 'off'
-            }]
-        }, {
-            featureType: 'poi',
-            stylers: [{
-                visibility: 'off'
-            }]
-        }]
-    };
-
-    // Get the HTML DOM element that will contain your map 
-    // We are using a div with id="map" seen below in the <body>
-    var mapElement = document.getElementById('map-canvas');
-
-    // Create the Google Map using our element and options defined above
-    var map = new google.maps.Map(mapElement, mapOptions);
-
-    // Let's also add a marker while we're at it
-    var marker = new google.maps.Marker({
-        position: new google.maps.LatLng(22.402789, 91.822156),
-        map: map,
-		icon: 'img/icons/map-marker.png',
+    // Facts counter
+    $('[data-toggle="counter-up"]').counterUp({
+        delay: 10,
+        time: 2000
     });
-}
+    
+    
+    // Back to top button
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.back-to-top').fadeIn('slow');
+        } else {
+            $('.back-to-top').fadeOut('slow');
+        }
+    });
+    $('.back-to-top').click(function () {
+        $('html, body').animate({scrollTop: 0}, 1500, 'easeInOutExpo');
+        return false;
+    });
 
-// ========== END GOOGLE MAP ========== //
 
-var wow = new WOW ({
-	offset:       75,          // distance to the element when triggering the animation (default is 0)
-	mobile:       false,       // trigger animations on mobile devices (default is true)
-});
-wow.init();
+    // Testimonials carousel
+    $(".testimonial-carousel").owlCarousel({
+        autoplay: true,
+        smartSpeed: 1500,
+        dots: true,
+        loop: true,
+        center: true,
+        responsive: {
+            0:{
+                items:1
+            },
+            576:{
+                items:1
+            },
+            768:{
+                items:2
+            },
+            992:{
+                items:3
+            }
+        }
+    });
+
+
+    // Vendor carousel
+    $('.vendor-carousel').owlCarousel({
+        loop: true,
+        margin: 45,
+        dots: false,
+        loop: true,
+        autoplay: true,
+        smartSpeed: 1000,
+        responsive: {
+            0:{
+                items:2
+            },
+            576:{
+                items:4
+            },
+            768:{
+                items:6
+            },
+            992:{
+                items:8
+            }
+        }
+    });
+    
+})(jQuery);
 
