@@ -491,3 +491,7 @@ h6,
         margin-bottom: -75px;
     }
 }
+
+.owl-carousel .owl-item img {
+    height: 60px!important;
+}
