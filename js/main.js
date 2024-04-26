@@ -124,3 +124,56 @@
     
 })(jQuery);
 
+function submitForm() {
+    var formData = new FormData(document.getElementById("myForm"));
+    
+    // Convert form data to JSON
+    var jsonObject = {};
+    formData.forEach(function(value, key){
+        jsonObject[key] = value;
+    });
+    var jsonData = JSON.stringify(jsonObject);
+    
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: jsonData,
+    redirect: "follow",
+    mode: 'cors'
+    };
+
+    fetch("http://192.168.1.101:8081/leads", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+};
+
+function submitFooterForm(){
+    var formData = new FormData(document.getElementById("myFooterForm"));
+    
+    // Convert form data to JSON
+    var jsonObject = {};
+    formData.forEach(function(value, key){
+        jsonObject[key] = value;
+    });
+    var jsonData = JSON.stringify(jsonObject);
+    
+    const myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    const requestOptions = {
+    method: "POST",
+    headers: myHeaders,
+    body: jsonData,
+    redirect: "follow",
+    mode: 'cors'
+    };
+
+    fetch("http://192.168.1.101:8081/leads", requestOptions)
+    .then((response) => response.text())
+    .then((result) => console.log(result))
+    .catch((error) => console.error(error));
+}

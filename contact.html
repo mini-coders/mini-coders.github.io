@@ -193,16 +193,16 @@
                     <form id="myForm">
                         <div class="row g-3">
                             <div class="col-md-6">
-                                <input type="text" class="form-control border-0 bg-light px-4" placeholder="Your Name" id="name" style="height: 55px;">
+                                <input type="text" class="form-control border-0 bg-light px-4" placeholder="Your Name" id="name" name="name" style="height: 55px;">
                             </div>
                             <div class="col-md-6">
-                                <input type="email" class="form-control border-0 bg-light px-4" placeholder="Your Email" id="email" style="height: 55px;">
+                                <input type="email" class="form-control border-0 bg-light px-4" placeholder="Your Email" id="email" name="email" style="height: 55px;">
                             </div>
                             <!-- <div class="col-12">
                                 <input type="text" class="form-control border-0 bg-light px-4" placeholder="Subject" style="height: 55px;">
                             </div> -->
                             <div class="col-12">
-                                <textarea class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Message" id="email"></textarea>
+                                <textarea class="form-control border-0 bg-light px-4 py-3" rows="4" placeholder="Message" id="message" name="message"></textarea>
                             </div>
                             <div class="col-12">
                                 <button class="btn btn-primary w-100 py-3" type="button" onclick="submitForm()">Send Message</button>
@@ -257,10 +257,10 @@
                             </h1>
                         </a>
                         <p class="mt-3 mb-4">Our process of building applications & website begins with analysing the requirements of our clients accordingly, we design and develop. Before deploy we ensure the</p>
-                        <form action="">
+                        <form id="myFooterForm">
                             <div class="input-group">
-                                <input type="text" class="form-control border-white p-3" placeholder="Your Email">
-                                <button class="btn btn-dark">Get Quote</button>
+                                <input type="text" class="form-control border-white p-3" placeholder="Your Email" id="email" name="email">
+                                <button class="btn btn-dark" type="button" onclick="submitFooterForm()">Get Quote</button>
                             </div>
                         </form>
                     </div>
@@ -353,34 +353,6 @@
 
     <!-- Template Javascript -->
     <script src="js/main.js"></script>
-
-    <script>
-        function submitForm() {
-            var formData = new FormData(document.getElementById("myForm"));
-            
-            // Convert form data to JSON
-            var jsonObject = {};
-            formData.forEach(function(value, key){
-                jsonObject[key] = value;
-            });
-            var jsonData = JSON.stringify(jsonObject);
-            
-            const myHeaders = new Headers();
-            myHeaders.append("Content-Type", "application/json");
-
-            const requestOptions = {
-            method: "POST",
-            headers: myHeaders,
-            body: jsonData,
-            redirect: "follow"
-            };
-
-            fetch("http://192.168.1.101:8081/leads", requestOptions)
-            .then((response) => response.text())
-            .then((result) => console.log(result))
-            .catch((error) => console.error(error));
-                    }
-    </script>
 </body>
 
 </html>
