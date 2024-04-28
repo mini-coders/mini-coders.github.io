@@ -145,7 +145,7 @@ function submitForm() {
     mode: 'cors'
     };
 
-    fetch("http://192.168.1.101:8081/leads", requestOptions)
+    fetch("https://ayush617.ddns.net/api/leads", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
@@ -172,7 +172,7 @@ function submitFooterForm(){
     mode: 'cors'
     };
 
-    fetch("http://192.168.1.101:8081/leads", requestOptions)
+    fetch("https://ayush617.ddns.net/api/leads", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
