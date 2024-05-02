@@ -140,9 +140,9 @@ function submitForm() {
     const requestOptions = {
     method: "POST",
     headers: myHeaders,
-    body: jsonData,
-    redirect: "follow",
-    mode: 'cors'
+    body: jsonData
+    // redirect: "follow",
+    // mode: 'cors'
     };
 
     fetch("https://ayush617.ddns.net/api/leads", requestOptions)
