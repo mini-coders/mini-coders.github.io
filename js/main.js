@@ -177,3 +177,8 @@ function submitFooterForm(){
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
 }
+
+function mailMe() {
+    let url = "https://mail.google.com/mail/?view=cm&fs=1&to=minicoders.help@gmail.com&su=Website%20Quotes&body=Hello%2C%0ANeed%20Quotation%20for%20my%20website."
+    window.open(url, "_blank", "width=600,height=400");
+}
