@@ -145,7 +145,7 @@ function submitForm() {
     // mode: 'cors'
     };
 
-    fetch("https://mini-coders.com/api/leads", requestOptions)
+    fetch("https://mini-coders.com/node/leads", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
@@ -172,7 +172,7 @@ function submitFooterForm(){
     mode: 'cors'
     };
 
-    fetch("https://mini-coders.com/api/leads", requestOptions)
+    fetch("https://mini-coders.com/node/leads", requestOptions)
     .then((response) => response.text())
     .then((result) => console.log(result))
     .catch((error) => console.error(error));
